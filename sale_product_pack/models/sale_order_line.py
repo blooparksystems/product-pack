@@ -54,6 +54,7 @@ class SaleOrderLine(models.Model):
         if self.product_id.pack_ok and self.pack_type == "detailed":
             if self.pack_component_price == "detailed":
                 self.price_unit = 0
+                self.purchase_price = 0
             for subline in self.product_id.get_pack_lines():
                 vals = subline.get_sale_order_line_vals(self, self.order_id)
                 if write:

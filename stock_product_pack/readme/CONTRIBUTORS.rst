@@ -5,6 +5,6 @@
   * Sergio Teruel
   * João Marques
 
-* `Bloopark <https://www.bloopark.de>`_:
+* `bloopark systems GmbH & Co. KG <https://www.bloopark.de>`_:
 
   * July Chacko

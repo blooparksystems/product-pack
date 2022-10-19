@@ -13,7 +13,7 @@
     "author": "NaN·tic, "
     "ADHOC SA, "
     "Tecnativa, "
-    "Bloopark, "
+    "bloopark systems GmbH & Co. KG, "
     "Odoo Community Association (OCA)",
     "maintainers": ["ernestotejeda"],
     "license": "AGPL-3",

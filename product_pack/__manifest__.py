@@ -6,7 +6,8 @@
     "category": "Product",
     "summary": "This module allows you to set a product as a Pack",
     "website": "https://github.com/OCA/product-pack",
-    "author": "NaN·tic, ADHOC SA, Tecnativa, Odoo Community Association (OCA)",
+    "author": "NaN·tic, ADHOC SA, Tecnativa,bloopark systems GmbH & Co. KG, "
+    "Odoo Community Association (OCA)",
     "maintainers": ["ernestotejeda"],
     "license": "AGPL-3",
     "depends": ["product"],

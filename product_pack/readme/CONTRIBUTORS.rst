@@ -13,6 +13,7 @@
 * `Sygel <https://www.sygel.es>`_:
 
   * Manuel Regidor
-* `Bloopark <https://www.bloopark.de/>`_:
+
+* `bloopark systems GmbH & Co. KG <https://www.bloopark.de/>`_:
 
   * July Chacko

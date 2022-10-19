@@ -73,11 +73,12 @@ class SaleOrderLine(models.Model):
             if vals_list:
                 self.create(vals_list)
 
-    @api.model
-    def create(self, vals):
-        record = super().create(vals)
-        record.expand_pack_line()
-        return record
+    @api.model_create_multi
+    def create(self, vals_list):
+        lines = super().create(vals_list)
+        for line in lines:
+            line.expand_pack_line()
+        return lines
 
     def write(self, vals):
         res = super().write(vals)

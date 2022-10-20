@@ -47,44 +47,38 @@ class SaleOrderLine(models.Model):
         )
 
     def expand_pack_line(self, write=False):
-        self.ensure_one()
+        # self.ensure_one()
         # if we are using update_pricelist or checking out on ecommerce we
         # only want to update prices
         vals_list = []
-        if self.product_id.pack_ok and self.pack_type == "detailed":
-            for subline in self.product_id.get_pack_lines():
-                vals = subline.get_sale_order_line_vals(self, self.order_id)
-                if write:
-                    existing_subline = first(
-                        self.pack_child_line_ids.filtered(
-                            lambda child: child.product_id == subline.product_id
+        for rec in self:
+            if rec.product_id.pack_ok and rec.pack_type == "detailed":
+                for subline in rec.product_id.get_pack_lines():
+                    vals = subline.get_sale_order_line_vals(self, rec.order_id)
+                    if write:
+                        existing_subline = first(
+                            self.pack_child_line_ids.filtered(
+                                lambda child: child.product_id == subline.product_id
+                            )
                         )
-                    )
-                    # if subline already exists we update, if not we create
-                    if existing_subline:
-                        if self.do_no_expand_pack_lines:
-                            vals.pop("product_uom_qty", None)
-                            vals.pop("discount", None)
-                        existing_subline.write(vals)
-                    elif not self.do_no_expand_pack_lines:
+                        # if subline already exists we update, if not we create
+                        if existing_subline:
+                            if rec.do_no_expand_pack_lines:
+                                vals.pop("product_uom_qty", None)
+                                vals.pop("discount", None)
+                            existing_subline.write(vals)
+                        elif not rec.do_no_expand_pack_lines:
+                            vals_list.append(vals)
+                    else:
                         vals_list.append(vals)
-                else:
-                    vals_list.append(vals)
-            if vals_list:
-                self.create(vals_list)
+                if vals_list:
+                    rec.create(vals_list)
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals_list):
         record = super().create(vals_list)
         record.expand_pack_line()
         return record
-
-    def write(self, vals):
-        res = super().write(vals)
-        if "product_id" in vals or "product_uom_qty" in vals:
-            for record in self:
-                record.expand_pack_line(write=True)
-        return res
 
     @api.onchange(
         "product_id",

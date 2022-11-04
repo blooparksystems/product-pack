@@ -54,7 +54,7 @@ class SaleOrderLine(models.Model):
         for rec in self:
             if rec.product_id.pack_ok and rec.pack_type == "detailed":
                 for subline in rec.product_id.get_pack_lines():
-                    vals = subline.get_sale_order_line_vals(self, rec.order_id)
+                    vals = subline.get_sale_order_line_vals(rec, rec.order_id)
                     if write:
                         existing_subline = first(
                             self.pack_child_line_ids.filtered(

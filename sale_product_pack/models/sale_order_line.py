@@ -76,9 +76,13 @@ class SaleOrderLine(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        record = super().create(vals_list)
-        record.expand_pack_line()
-        return record
+        ids = []
+        for vals in vals_list:
+            record = super().create(vals)
+            record.expand_pack_line()
+            ids.append(record.id)
+        lines = self.search([("id", "in", ids)])
+        return lines
 
     @api.onchange(
         "product_id",

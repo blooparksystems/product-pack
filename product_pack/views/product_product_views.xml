@@ -7,11 +7,22 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_normal_form_view" />
         <field name="arch" type="xml">
-            <group name="group_pack">
-                <group string="Pack Products" colspan="4">
-                    <field name="pack_line_ids" nolabel="1" />
+            <page name="page_pack" position="inside">
+                <group name="pack_products" string="Pack Products">
+                    <p
+                        attrs="{'invisible': [('id', '!=', False)]}"
+                    >You must save first to add pack lines</p>
+                    <group>
+                        <field name="id" invisible="1" />
+                    </group>
+                    <field
+                        name="pack_line_ids"
+                        nolabel="1"
+                        attrs="{'readonly': [('id', '=', False)]}"
+                    />
+
                 </group>
-            </group>
+            </page>
         </field>
     </record>
 </odoo>

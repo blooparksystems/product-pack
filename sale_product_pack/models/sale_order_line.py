@@ -84,6 +84,13 @@ class SaleOrderLine(models.Model):
         lines = self.search([("id", "in", ids)])
         return lines
 
+    def write(self, vals):
+        res = super().write(vals)
+        if "product_id" in vals or "product_uom_qty" in vals:
+            for record in self:
+                record.expand_pack_line(write=True)
+        return res
+
     @api.onchange(
         "product_id",
         "product_uom_qty",
